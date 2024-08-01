@@ -82,11 +82,11 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
 
             getToken: () => {
-                return localStorage.getItem("jwt_token");
+                return sessionStorage.getItem("jwt_token");
             },
 
 			logout: () => {
-                localStorage.removeItem("jwt_token");
+                sessionStorage.removeItem("jwt_token");
                 setStore({ currentUser: null });
             },
 
@@ -104,7 +104,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         throw new Error(errorData.error || "Invalid email or password");
                     }
                     const data = await resp.json();
-                    localStorage.setItem("jwt_token", data.access_token);
+                    sessionStorage.setItem("jwt_token", data.access_token);
                     setStore({ currentUser: data.user, authError: null });
                     return true;
                 } catch (error) {
@@ -128,7 +128,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         throw new Error(errorData.error || "Registration failed");
                     }
                     const data = await resp.json();
-                    localStorage.setItem("jwt_token", data.access_token);
+                    sessionStorage.setItem("jwt_token", data.access_token);
                     setStore({ currentUser: data.user, authError: null });
                 } catch (error) {
                     setStore({ currentUser: null, authError: error.message });
